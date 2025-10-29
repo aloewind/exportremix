@@ -296,14 +296,14 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
+      <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-3xl lg:max-w-4xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-xl">
-            <Sparkles className="w-6 h-6 text-primary" />
-            AI File Analysis
+          <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+            <span className="truncate">AI File Analysis</span>
           </DialogTitle>
-          <DialogDescription className="text-base">
-            Analyzing: <span className="font-medium text-foreground">{file.file_name}</span>
+          <DialogDescription className="text-sm sm:text-base">
+            Analyzing: <span className="font-medium text-foreground break-all">{file.file_name}</span>
           </DialogDescription>
         </DialogHeader>
 
@@ -315,15 +315,15 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
             <CardContent>
               <div className="space-y-2">
                 {workflowStatus.map((status, index) => (
-                  <div key={index} className="flex items-start gap-2 text-sm">
+                  <div key={index} className="flex items-start gap-2 text-xs sm:text-sm">
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary font-semibold text-xs flex-shrink-0 mt-0.5">
                       {index + 1}
                     </span>
-                    <span className="flex-1 leading-relaxed">{status}</span>
+                    <span className="flex-1 leading-relaxed break-words">{status}</span>
                   </div>
                 ))}
                 {(analyzing || generatingCorrected || retesting) && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <span>Processing...</span>
                   </div>
@@ -334,17 +334,17 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
         )}
 
         {!analysis ? (
-          <div className="py-12 text-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-              <Sparkles className="w-8 h-8 text-primary" />
+          <div className="py-8 sm:py-12 text-center space-y-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
+              <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-2">Ready to analyze</h3>
-              <p className="text-muted-foreground mb-4">
+              <h3 className="text-base sm:text-lg font-semibold mb-2">Ready to analyze</h3>
+              <p className="text-sm sm:text-base text-muted-foreground mb-4 px-4">
                 Click the button below to start AI-powered analysis of your file
               </p>
             </div>
-            <Button onClick={handleAnalyze} disabled={analyzing}>
+            <Button onClick={handleAnalyze} disabled={analyzing} className="w-full sm:w-auto">
               {analyzing ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin mr-2" />
@@ -359,45 +359,45 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
             </Button>
           </div>
         ) : (
-          <div className="space-y-6 py-2">
+          <div className="space-y-4 sm:space-y-6 py-2">
             {analysis.feedback && (
               <Card
                 className={`border-2 ${Number.parseInt(analysis.feedback.overall_quality) >= 9 ? "border-green-500 bg-green-500/5" : "border-primary/20 bg-primary/5"}`}
               >
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                     {Number.parseInt(analysis.feedback.overall_quality) >= 9 ? (
                       <>
-                        <CheckCircle2 className="w-5 h-5 text-green-600" />
-                        <span className="text-green-600">Fully Compliant</span>
+                        <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0" />
+                        <span className="text-green-600 truncate">Fully Compliant</span>
                       </>
                     ) : (
                       <>
-                        <CheckCircle2 className="w-5 h-5 text-primary" />
-                        Overall Assessment
+                        <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+                        <span className="truncate">Overall Assessment</span>
                       </>
                     )}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between p-4 rounded-lg bg-background border">
-                    <span className="font-medium">Quality Score</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 sm:p-4 rounded-lg bg-background border">
+                    <span className="font-medium text-sm sm:text-base">Quality Score</span>
                     <Badge
-                      className={`text-base px-3 py-1 ${Number.parseInt(analysis.feedback.overall_quality) >= 9 ? "bg-green-600 text-white" : "bg-primary text-primary-foreground"}`}
+                      className={`text-sm sm:text-base px-3 py-1 w-fit ${Number.parseInt(analysis.feedback.overall_quality) >= 9 ? "bg-green-600 text-white" : "bg-primary text-primary-foreground"}`}
                     >
                       {analysis.feedback.overall_quality}/10
                     </Badge>
                   </div>
                   {Number.parseInt(analysis.feedback.overall_quality) >= 9 && (
-                    <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
-                      <p className="text-sm font-medium text-green-700">
+                    <div className="p-3 sm:p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                      <p className="text-xs sm:text-sm font-medium text-green-700 break-words">
                         ✅ No major errors - Fully compliant with WCO/HTS standards
                       </p>
                     </div>
                   )}
                   {analysis.feedback.summary && (
-                    <div className="p-4 rounded-lg bg-background border">
-                      <p className="text-sm leading-relaxed">{analysis.feedback.summary}</p>
+                    <div className="p-3 sm:p-4 rounded-lg bg-background border">
+                      <p className="text-xs sm:text-sm leading-relaxed break-words">{analysis.feedback.summary}</p>
                     </div>
                   )}
                 </CardContent>
@@ -407,29 +407,42 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
             {analysis.errors && analysis.errors.length > 0 && (
               <Card className="border-red-500/20">
                 <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <AlertTriangle className="w-5 h-5 text-red-600" />
-                    Issues & Inconsistencies
-                    <Badge variant="outline" className="ml-auto bg-red-500/10 text-red-600 border-red-500/20">
+                  <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-base sm:text-lg">
+                    <div className="flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 flex-shrink-0" />
+                      <span className="break-words">Issues & Inconsistencies</span>
+                    </div>
+                    <Badge
+                      variant="outline"
+                      className="bg-red-500/10 text-red-600 border-red-500/20 w-fit sm:ml-auto text-xs sm:text-sm"
+                    >
                       {analysis.errors.length} found
                     </Badge>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {analysis.errors.map((error: any, index: number) => (
-                    <div key={index} className="p-4 rounded-lg border bg-card hover:bg-accent/5 transition-colors">
-                      <div className="flex items-start gap-3">
-                        <div className="mt-0.5">{getSeverityIcon(error.severity)}</div>
-                        <div className="flex-1 space-y-2">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-semibold text-base">{error.type}</span>
-                            <Badge variant="outline" className={getSeverityColor(error.severity)}>
+                    <div
+                      key={index}
+                      className="p-3 sm:p-4 rounded-lg border bg-card hover:bg-accent/5 transition-colors"
+                    >
+                      <div className="flex items-start gap-2 sm:gap-3">
+                        <div className="mt-0.5 flex-shrink-0">{getSeverityIcon(error.severity)}</div>
+                        <div className="flex-1 space-y-2 min-w-0">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                            <span className="font-semibold text-sm sm:text-base break-words">{error.type}</span>
+                            <Badge
+                              variant="outline"
+                              className={`${getSeverityColor(error.severity)} w-fit text-xs sm:text-sm`}
+                            >
                               {error.severity} priority
                             </Badge>
                           </div>
-                          <p className="text-sm text-muted-foreground leading-relaxed">{error.description}</p>
+                          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed break-words">
+                            {error.description}
+                          </p>
                           {error.location && (
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-muted-foreground break-words">
                               <span className="font-medium">Location:</span> {error.location}
                             </p>
                           )}
@@ -444,29 +457,42 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
             {analysis.suggestions && analysis.suggestions.length > 0 && (
               <Card className="border-primary/20">
                 <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Lightbulb className="w-5 h-5 text-primary" />
-                    Recommendations
-                    <Badge variant="outline" className="ml-auto bg-primary/10 text-primary border-primary/20">
+                  <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-base sm:text-lg">
+                    <div className="flex items-center gap-2">
+                      <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+                      <span className="break-words">Recommendations</span>
+                    </div>
+                    <Badge
+                      variant="outline"
+                      className="bg-primary/10 text-primary border-primary/20 w-fit sm:ml-auto text-xs sm:text-sm"
+                    >
                       {analysis.suggestions.length} suggestions
                     </Badge>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {analysis.suggestions.map((suggestion: any, index: number) => (
-                    <div key={index} className="p-4 rounded-lg border bg-card hover:bg-accent/5 transition-colors">
-                      <div className="flex items-start gap-3">
-                        <Lightbulb className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                        <div className="flex-1 space-y-2">
+                    <div
+                      key={index}
+                      className="p-3 sm:p-4 rounded-lg border bg-card hover:bg-accent/5 transition-colors"
+                    >
+                      <div className="flex items-start gap-2 sm:gap-3">
+                        <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 space-y-2 min-w-0">
                           <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+                            <Badge
+                              variant="outline"
+                              className="bg-primary/10 text-primary border-primary/20 text-xs sm:text-sm"
+                            >
                               {suggestion.category}
                             </Badge>
                           </div>
-                          <p className="font-medium text-base leading-relaxed">{suggestion.recommendation}</p>
-                          <div className="flex items-start gap-2 text-sm text-muted-foreground bg-muted/50 p-2 rounded">
-                            <span className="font-medium text-foreground">Impact:</span>
-                            <span className="flex-1">{suggestion.impact}</span>
+                          <p className="font-medium text-sm sm:text-base leading-relaxed break-words">
+                            {suggestion.recommendation}
+                          </p>
+                          <div className="flex flex-col sm:flex-row sm:items-start gap-2 text-xs sm:text-sm text-muted-foreground bg-muted/50 p-2 rounded">
+                            <span className="font-medium text-foreground flex-shrink-0">Impact:</span>
+                            <span className="flex-1 break-words">{suggestion.impact}</span>
                           </div>
                         </div>
                       </div>
@@ -479,19 +505,19 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
             {analysis.feedback?.next_steps && analysis.feedback.next_steps.length > 0 && (
               <Card className="border-green-500/20 bg-green-500/5">
                 <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <CheckCircle2 className="w-5 h-5 text-green-600" />
-                    Next Steps
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0" />
+                    <span className="truncate">Next Steps</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ol className="space-y-3">
                     {analysis.feedback.next_steps.map((step: string, index: number) => (
-                      <li key={index} className="flex items-start gap-3 text-sm">
-                        <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground font-semibold text-xs flex-shrink-0">
+                      <li key={index} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm">
+                        <span className="flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary text-primary-foreground font-semibold text-xs flex-shrink-0">
                           {index + 1}
                         </span>
-                        <span className="flex-1 pt-0.5 leading-relaxed">{step}</span>
+                        <span className="flex-1 pt-0.5 leading-relaxed break-words">{step}</span>
                       </li>
                     ))}
                   </ol>
@@ -502,25 +528,29 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
             {analysis.errors && analysis.errors.length > 0 && !correctedFile && (
               <Card className="border-primary/20 bg-primary/5">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Sparkles className="w-5 h-5 text-primary" />
-                    Auto-Correction Available
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+                    <span className="truncate">Auto-Correction Available</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs sm:text-sm text-muted-foreground break-words">
                     Generate a corrected version of your manifest with automatic fixes for detected issues.
                   </p>
-                  <Button onClick={handleGenerateCorrected} disabled={generatingCorrected} className="w-full">
+                  <Button
+                    onClick={handleGenerateCorrected}
+                    disabled={generatingCorrected}
+                    className="w-full text-sm sm:text-base"
+                  >
                     {generatingCorrected ? (
                       <>
-                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                        Generating Corrected File...
+                        <Loader2 className="w-4 h-4 animate-spin mr-2 flex-shrink-0" />
+                        <span className="truncate">Generating Corrected File...</span>
                       </>
                     ) : (
                       <>
-                        <Sparkles className="w-4 h-4 mr-2" />
-                        Generate Corrected Manifest
+                        <Sparkles className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span className="truncate">Generate Corrected Manifest</span>
                       </>
                     )}
                   </Button>
@@ -531,37 +561,41 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
             {correctedFile && (
               <Card className="border-green-500/20 bg-green-500/5">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <CheckCircle2 className="w-5 h-5 text-green-600" />
-                    Corrected Manifest Ready
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0" />
+                    <span className="truncate">Corrected Manifest Ready</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="p-4 rounded-lg bg-background border space-y-2">
-                    <p className="text-sm font-medium">✅ Fixed {correctedFile.issuesFixed} issues</p>
-                    <p className="text-sm font-medium">✅ Removed {correctedFile.duplicatesRemoved} duplicates</p>
-                    <p className="text-sm text-muted-foreground">File: {correctedFile.fileName}</p>
+                  <div className="p-3 sm:p-4 rounded-lg bg-background border space-y-2">
+                    <p className="text-xs sm:text-sm font-medium break-words">
+                      ✅ Fixed {correctedFile.issuesFixed} issues
+                    </p>
+                    <p className="text-xs sm:text-sm font-medium break-words">
+                      ✅ Removed {correctedFile.duplicatesRemoved} duplicates
+                    </p>
+                    <p className="text-xs sm:text-sm text-muted-foreground break-all">File: {correctedFile.fileName}</p>
                   </div>
-                  <div className="flex gap-3">
-                    <Button onClick={handleDownloadCorrected} className="flex-1" variant="default">
-                      <Download className="w-4 h-4 mr-2" />
-                      Download Corrected File
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button onClick={handleDownloadCorrected} className="flex-1 text-sm sm:text-base" variant="default">
+                      <Download className="w-4 h-4 mr-2 flex-shrink-0" />
+                      <span className="truncate">Download Corrected File</span>
                     </Button>
                     <Button
                       onClick={handleRetest}
                       disabled={retesting}
-                      className="flex-1 bg-transparent"
+                      className="flex-1 bg-transparent text-sm sm:text-base"
                       variant="outline"
                     >
                       {retesting ? (
                         <>
-                          <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                          Retesting...
+                          <Loader2 className="w-4 h-4 animate-spin mr-2 flex-shrink-0" />
+                          <span className="truncate">Retesting...</span>
                         </>
                       ) : (
                         <>
-                          <RefreshCw className="w-4 h-4 mr-2" />
-                          Retest File
+                          <RefreshCw className="w-4 h-4 mr-2 flex-shrink-0" />
+                          <span className="truncate">Retest File</span>
                         </>
                       )}
                     </Button>
@@ -570,7 +604,7 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
               </Card>
             )}
 
-            <div className="flex justify-end gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-2">
               <Button
                 variant="outline"
                 onClick={() => {
@@ -578,12 +612,14 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
                   setCorrectedFile(null)
                   setWorkflowStatus([])
                 }}
-                className="gap-2"
+                className="gap-2 w-full sm:w-auto text-sm sm:text-base"
               >
-                <Sparkles className="w-4 h-4" />
-                Analyze Again
+                <Sparkles className="w-4 h-4 flex-shrink-0" />
+                <span className="truncate">Analyze Again</span>
               </Button>
-              <Button onClick={() => onOpenChange(false)}>Close</Button>
+              <Button onClick={() => onOpenChange(false)} className="w-full sm:w-auto text-sm sm:text-base">
+                Close
+              </Button>
             </div>
           </div>
         )}
