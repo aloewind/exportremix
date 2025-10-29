@@ -207,35 +207,37 @@ export function FilesPageClient() {
 
   return (
     <DashboardLayout>
-      <div className="container mx-auto p-6 space-y-6">
+      <div className="container mx-auto p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold">{t.files?.title || "My Files"}</h1>
-            <p className="text-muted-foreground mt-1">Manage and analyze your uploaded manifest files</p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold truncate">{t.files?.title || "My Files"}</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1 break-words">
+              Manage and analyze your uploaded manifest files
+            </p>
           </div>
-          <Button onClick={() => router.push("/dashboard/upload")}>
-            <Upload className="w-4 h-4 mr-2" />
-            {t.files?.uploadNew || "Upload New"}
+          <Button onClick={() => router.push("/dashboard/upload")} className="w-full sm:w-auto flex-shrink-0">
+            <Upload className="w-4 h-4 mr-2 flex-shrink-0" />
+            <span className="truncate">{t.files?.uploadNew || "Upload New"}</span>
           </Button>
         </div>
 
         {/* Filters */}
         <Card>
-          <CardContent className="pt-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <CardContent className="pt-4 sm:pt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground flex-shrink-0" />
                 <Input
                   placeholder={t.files?.search || "Search files..."}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 h-10 sm:h-11 text-sm sm:text-base"
                 />
               </div>
               <Select value={filterType} onValueChange={setFilterType}>
-                <SelectTrigger>
-                  <Filter className="w-4 h-4 mr-2" />
+                <SelectTrigger className="h-10 sm:h-11 text-sm sm:text-base">
+                  <Filter className="w-4 h-4 mr-2 flex-shrink-0" />
                   <SelectValue placeholder={t.files?.filterByType || "Filter by type"} />
                 </SelectTrigger>
                 <SelectContent>
@@ -248,8 +250,8 @@ export function FilesPageClient() {
                 </SelectContent>
               </Select>
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger>
-                  <Calendar className="w-4 h-4 mr-2" />
+                <SelectTrigger className="h-10 sm:h-11 text-sm sm:text-base sm:col-span-2 md:col-span-1">
+                  <Calendar className="w-4 h-4 mr-2 flex-shrink-0" />
                   <SelectValue placeholder={t.files?.sortBy || "Sort by"} />
                 </SelectTrigger>
                 <SelectContent>
@@ -267,38 +269,40 @@ export function FilesPageClient() {
         {loading ? (
           <div className="text-center py-12">
             <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
-            <p className="text-muted-foreground mt-4">{t.common?.loading || "Loading..."}</p>
+            <p className="text-sm sm:text-base text-muted-foreground mt-4">{t.common?.loading || "Loading..."}</p>
           </div>
         ) : filteredFiles.length === 0 ? (
           <Card>
-            <CardContent className="py-12 text-center">
-              <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No files found</h3>
-              <p className="text-muted-foreground mb-4">
+            <CardContent className="py-12 text-center px-4">
+              <FileText className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-base sm:text-lg font-semibold mb-2">No files found</h3>
+              <p className="text-sm sm:text-base text-muted-foreground mb-4 break-words">
                 {searchQuery || filterType !== "all"
                   ? "Try adjusting your filters"
                   : "Upload your first file to get started"}
               </p>
-              <Button onClick={() => router.push("/dashboard/upload")}>
-                <Upload className="w-4 h-4 mr-2" />
-                {t.common?.upload || "Upload"} File
+              <Button onClick={() => router.push("/dashboard/upload")} className="w-full sm:w-auto">
+                <Upload className="w-4 h-4 mr-2 flex-shrink-0" />
+                <span className="truncate">{t.common?.upload || "Upload"} File</span>
               </Button>
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4">
             {filteredFiles.map((file) => (
               <Card key={file.id} className="hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start gap-4 flex-1">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <FileText className="w-6 h-6 text-primary" />
+                <CardContent className="p-3 sm:p-4 md:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
+                    <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-semibold truncate">{file.file_name}</h3>
-                        <div className="flex items-center gap-2 mt-1 flex-wrap">
-                          <Badge variant="outline" className={getFileTypeColor(file.file_type)}>
+                        <h3 className="text-base sm:text-lg font-semibold break-words line-clamp-2">
+                          {file.file_name}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-1.5 sm:mt-2 flex-wrap">
+                          <Badge variant="outline" className={`${getFileTypeColor(file.file_type)} text-xs sm:text-sm`}>
                             {file.file_type === "text/csv"
                               ? "CSV"
                               : file.file_type === "application/json"
@@ -311,17 +315,31 @@ export function FilesPageClient() {
                                       ? "PDF"
                                       : "FILE"}
                           </Badge>
-                          <Badge variant="outline">{file.status}</Badge>
-                          <span className="text-sm text-muted-foreground">{formatDate(file.created_at)}</span>
+                          <Badge variant="outline" className="text-xs sm:text-sm">
+                            {file.status}
+                          </Badge>
+                          <span className="text-xs sm:text-sm text-muted-foreground break-words">
+                            {formatDate(file.created_at)}
+                          </span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <Button variant="outline" size="sm" onClick={() => handleAnalyze(file)}>
-                        <Sparkles className="w-4 h-4 mr-2" />
-                        {t.files?.analyze || "Analyze"}
+                    <div className="flex items-center gap-2 w-full sm:w-auto sm:flex-shrink-0">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleAnalyze(file)}
+                        className="flex-1 sm:flex-initial h-10 text-sm sm:text-base"
+                      >
+                        <Sparkles className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span className="truncate">{t.files?.analyze || "Analyze"}</span>
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => handleDelete(file.id)}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleDelete(file.id)}
+                        className="h-10 w-10 flex-shrink-0"
+                      >
                         <Trash2 className="w-4 h-4 text-destructive" />
                       </Button>
                     </div>
