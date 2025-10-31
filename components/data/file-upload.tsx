@@ -39,7 +39,7 @@ export function FileUpload({ onFilesProcessed }: { onFilesProcessed?: (files: Up
       reader.onload = async (e) => {
         try {
           const content = e.target?.result as string
-          let parsedData
+          let parsedData: any // Added explicit any type annotation
 
           if (file.name.endsWith(".json")) {
             parsedData = JSON.parse(content)

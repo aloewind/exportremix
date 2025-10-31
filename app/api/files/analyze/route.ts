@@ -779,7 +779,7 @@ export async function POST(request: Request) {
     const { text } = await generateText({
       model: openai("gpt-4o"),
       temperature: 0.7,
-      maxTokens: 1500,
+      maxOutputTokens: 1500,
       prompt: `Analyze and correct manifest. Normalize: remove spaces from numbers, convert MM/DD/YYYY to YYYY-MM-DD. Fix: missing/mismatched EstDuty, invalid HSCode (6-10 digits, 6000-8499), duplicate CargoItems/Origin-Destination pairs, add Manifest ID if missing. Output quality score 0-10, issues with locations/priorities, 3 fixes, and corrected file content as JSON.
 
 File: ${file.file_name}

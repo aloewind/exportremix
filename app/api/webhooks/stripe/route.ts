@@ -31,8 +31,8 @@ export async function POST(request: Request) {
 
         if (userId && session.subscription) {
           const sub = await stripe.subscriptions.retrieve(session.subscription as string)
-          const start = sub.items.data[0].period.start
-          const end = sub.items.data[0].period.end
+          const periodStart = new Date(sub.current_period_start * 1000).toISOString()
+          const periodEnd = new Date(sub.current_period_end * 1000).toISOString()
 
           await supabase
             .from("subscriptions")
@@ -41,8 +41,8 @@ export async function POST(request: Request) {
               stripe_price_id: sub.items.data[0].price.id,
               tier: tierId || "pro",
               status: "active",
-              current_period_start: new Date(start * 1000).toISOString(),
-              current_period_end: new Date(end * 1000).toISOString(),
+              current_period_start: periodStart,
+              current_period_end: periodEnd,
               updated_at: new Date().toISOString(),
             })
             .eq("user_id", userId)
@@ -66,8 +66,8 @@ export async function POST(request: Request) {
       case "customer.subscription.created": {
         const sub = event.data.object as Stripe.Subscription
         const customerId = sub.customer as string
-        const start = sub.items.data[0].period.start
-        const end = sub.items.data[0].period.end
+        const periodStart = new Date(sub.current_period_start * 1000).toISOString()
+        const periodEnd = new Date(sub.current_period_end * 1000).toISOString()
 
         const { data: profile } = await supabase
           .from("profiles")
@@ -86,8 +86,8 @@ export async function POST(request: Request) {
               stripe_price_id: sub.items.data[0].price.id,
               tier: tierId || "pro",
               status: "active",
-              current_period_start: new Date(start * 1000).toISOString(),
-              current_period_end: new Date(end * 1000).toISOString(),
+              current_period_start: periodStart,
+              current_period_end: periodEnd,
               updated_at: new Date().toISOString(),
             })
             .eq("user_id", userId)
@@ -98,8 +98,8 @@ export async function POST(request: Request) {
       case "customer.subscription.updated": {
         const sub = event.data.object as Stripe.Subscription
         const customerId = sub.customer as string
-        const start = sub.items.data[0].period.start
-        const end = sub.items.data[0].period.end
+        const periodStart = new Date(sub.current_period_start * 1000).toISOString()
+        const periodEnd = new Date(sub.current_period_end * 1000).toISOString()
 
         const { data: existingSub } = await supabase
           .from("subscriptions")
@@ -112,8 +112,8 @@ export async function POST(request: Request) {
             .from("subscriptions")
             .update({
               status: sub.status === "active" ? "active" : sub.status,
-              current_period_start: new Date(start * 1000).toISOString(),
-              current_period_end: new Date(end * 1000).toISOString(),
+              current_period_start: periodStart,
+              current_period_end: periodEnd,
               cancel_at_period_end: sub.cancel_at_period_end,
               updated_at: new Date().toISOString(),
             })

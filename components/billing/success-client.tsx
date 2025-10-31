@@ -17,8 +17,8 @@ export function SuccessClient({ tier }: SuccessClientProps) {
   const router = useRouter()
   const [countdown, setCountdown] = useState(10)
   const tierInfo = SUBSCRIPTION_TIERS.find((t) => t.id === tier) || SUBSCRIPTION_TIERS[0]
-  const isPro = tier === "pro"
-  const isEnterprise = tier === "enterprise"
+  const isPro: boolean = tier === "pro"
+  const isEnterprise: boolean = tier === "enterprise"
 
   useEffect(() => {
     // Trigger confetti celebration
