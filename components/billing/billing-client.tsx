@@ -155,7 +155,8 @@ export function BillingClient({ subscription, usage }: BillingClientProps) {
                 <p className="text-sm text-muted-foreground mt-1">
                   {(() => {
                     const key = "subscriptionCancelledDesc" as keyof typeof t.billing
-                    const desc = key in t.billing ? (t.billing[key] as string) : null
+                    const desc =
+                      key in t.billing && typeof t.billing[key] === "string" ? (t.billing[key] as string) : null
                     return desc
                       ? desc.replace("{date}", new Date(subscription.current_period_end).toLocaleDateString())
                       : `Your subscription will remain active until ${new Date(subscription.current_period_end).toLocaleDateString()}`
