@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 const Spinner = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>(({ className, ...props }, ref) => {
   return (
     <Loader2Icon
-      ref={ref as any}
+      ref={ref}
       role="status"
       aria-label="Loading"
       className={cn("size-4 animate-spin", className)}
