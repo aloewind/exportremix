@@ -30,15 +30,17 @@ export async function POST(request: Request) {
         const tierId = session.metadata?.tier_id
 
         if (userId && session.subscription) {
-          const sub = await stripe.subscriptions.retrieve(session.subscription as string)
-          const periodStart = new Date(sub.current_period_start * 1000).toISOString()
-          const periodEnd = new Date(sub.current_period_end * 1000).toISOString()
+          // stripe.subscriptions.retrieve returns Stripe.Response<Stripe.Subscription>
+          // cast to Stripe.Subscription to access current_period_start and current_period_end
+          const sub = (await stripe.subscriptions.retrieve(session.subscription as string)) as unknown as Stripe.Subscription
+          const periodStart = sub.current_period_start ? new Date(sub.current_period_start * 1000).toISOString() : null
+          const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null
 
           await supabase
             .from("subscriptions")
             .update({
               stripe_subscription_id: sub.id,
-              stripe_price_id: sub.items.data[0].price.id,
+              stripe_price_id: sub.items?.data?.[0]?.price?.id ?? null,
               tier: tierId || "pro",
               status: "active",
               current_period_start: periodStart,
@@ -64,10 +66,11 @@ export async function POST(request: Request) {
       }
 
       case "customer.subscription.created": {
+        // event.data.object may be typed loosely; assert as Stripe.Subscription
         const sub = event.data.object as Stripe.Subscription
         const customerId = sub.customer as string
-        const periodStart = new Date(sub.current_period_start * 1000).toISOString()
-        const periodEnd = new Date(sub.current_period_end * 1000).toISOString()
+        const periodStart = sub.current_period_start ? new Date(sub.current_period_start * 1000).toISOString() : null
+        const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null
 
         const { data: profile } = await supabase
           .from("profiles")
@@ -83,7 +86,7 @@ export async function POST(request: Request) {
             .from("subscriptions")
             .update({
               stripe_subscription_id: sub.id,
-              stripe_price_id: sub.items.data[0].price.id,
+              stripe_price_id: sub.items?.data?.[0]?.price?.id ?? null,
               tier: tierId || "pro",
               status: "active",
               current_period_start: periodStart,
@@ -98,8 +101,8 @@ export async function POST(request: Request) {
       case "customer.subscription.updated": {
         const sub = event.data.object as Stripe.Subscription
         const customerId = sub.customer as string
-        const periodStart = new Date(sub.current_period_start * 1000).toISOString()
-        const periodEnd = new Date(sub.current_period_end * 1000).toISOString()
+        const periodStart = sub.current_period_start ? new Date(sub.current_period_start * 1000).toISOString() : null
+        const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null
 
         const { data: existingSub } = await supabase
           .from("subscriptions")
@@ -114,7 +117,7 @@ export async function POST(request: Request) {
               status: sub.status === "active" ? "active" : sub.status,
               current_period_start: periodStart,
               current_period_end: periodEnd,
-              cancel_at_period_end: sub.cancel_at_period_end,
+              cancel_at_period_end: sub.cancel_at_period_end ?? false,
               updated_at: new Date().toISOString(),
             })
             .eq("user_id", existingSub.user_id)
