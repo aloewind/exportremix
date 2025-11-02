@@ -43,7 +43,7 @@ const Item = React.forwardRef<
   const Comp = asChild ? Slot : "div"
   return (
     <Comp
-      ref={ref}
+      ref={ref as any}
       data-slot="item"
       data-variant={variant}
       data-size={size}

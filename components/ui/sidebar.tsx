@@ -369,7 +369,7 @@ const SidebarGroupLabel = React.forwardRef<HTMLElement, React.ComponentProps<"di
 
     return (
       <Comp
-        ref={ref}
+        ref={ref as any}
         data-slot="sidebar-group-label"
         data-sidebar="group-label"
         className={cn(
@@ -390,7 +390,7 @@ const SidebarGroupAction = React.forwardRef<HTMLElement, React.ComponentProps<"b
 
     return (
       <Comp
-        ref={ref}
+        ref={ref as any}
         data-slot="sidebar-group-action"
         data-sidebar="group-action"
         className={cn(
@@ -475,7 +475,7 @@ const SidebarMenuButton = React.forwardRef<
 
   const button = (
     <Comp
-      ref={ref}
+      ref={ref as any}
       data-slot="sidebar-menu-button"
       data-sidebar="menu-button"
       data-size={size}
@@ -515,7 +515,7 @@ const SidebarMenuAction = React.forwardRef<
 
   return (
     <Comp
-      ref={ref}
+      ref={ref as any}
       data-slot="sidebar-menu-action"
       data-sidebar="menu-action"
       className={cn(
@@ -626,7 +626,7 @@ const SidebarMenuSubButton = React.forwardRef<
 
   return (
     <Comp
-      ref={ref}
+      ref={ref as any}
       data-slot="sidebar-menu-sub-button"
       data-sidebar="menu-sub-button"
       data-size={size}

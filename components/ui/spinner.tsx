@@ -3,10 +3,10 @@ import { Loader2Icon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const Spinner = React.forwardRef<SVGElement, React.ComponentProps<"svg">>(({ className, ...props }, ref) => {
+const Spinner = React.forwardRef<SVGSVGElement, React.ComponentProps<"svg">>(({ className, ...props }, ref) => {
   return (
     <Loader2Icon
-      ref={ref as React.Ref<SVGSVGElement>}
+      ref={ref}
       role="status"
       aria-label="Loading"
       className={cn("size-4 animate-spin", className)}
