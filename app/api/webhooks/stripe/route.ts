@@ -31,8 +31,12 @@ export async function POST(request: Request) {
 
         if (userId && session.subscription) {
           const sub = (await stripe.subscriptions.retrieve(session.subscription as string)) as Stripe.Subscription
-          const periodStart = sub.current_period_start ? new Date(sub.current_period_start * 1000).toISOString() : null
-          const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null
+          const periodStart = (sub as any).current_period_start
+            ? new Date((sub as any).current_period_start * 1000).toISOString()
+            : null
+          const periodEnd = (sub as any).current_period_end
+            ? new Date((sub as any).current_period_end * 1000).toISOString()
+            : null
 
           await supabase
             .from("subscriptions")
@@ -66,8 +70,12 @@ export async function POST(request: Request) {
       case "customer.subscription.created": {
         const sub = event.data.object as Stripe.Subscription
         const customerId = sub.customer as string
-        const periodStart = sub.current_period_start ? new Date(sub.current_period_start * 1000).toISOString() : null
-        const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null
+        const periodStart = (sub as any).current_period_start
+          ? new Date((sub as any).current_period_start * 1000).toISOString()
+          : null
+        const periodEnd = (sub as any).current_period_end
+          ? new Date((sub as any).current_period_end * 1000).toISOString()
+          : null
 
         const { data: profile } = await supabase
           .from("profiles")
@@ -98,8 +106,12 @@ export async function POST(request: Request) {
       case "customer.subscription.updated": {
         const sub = event.data.object as Stripe.Subscription
         const customerId = sub.customer as string
-        const periodStart = sub.current_period_start ? new Date(sub.current_period_start * 1000).toISOString() : null
-        const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null
+        const periodStart = (sub as any).current_period_start
+          ? new Date((sub as any).current_period_start * 1000).toISOString()
+          : null
+        const periodEnd = (sub as any).current_period_end
+          ? new Date((sub as any).current_period_end * 1000).toISOString()
+          : null
 
         const { data: existingSub } = await supabase
           .from("subscriptions")
