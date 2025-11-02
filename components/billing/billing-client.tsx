@@ -175,7 +175,8 @@ export function BillingClient({ subscription, usage }: BillingClientProps) {
             <div>
               <div className="flex items-center gap-3">
                 <h2 className="text-2xl font-semibold">
-                  {t.billing[currentTier.name as keyof typeof t.billing] as string} {t.billing.plan}
+                  {(t.billing[currentTier.name as keyof typeof t.billing] as string) || currentTier.name}{" "}
+                  {t.billing.plan}
                 </h2>
                 <Badge
                   variant={

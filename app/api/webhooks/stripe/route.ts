@@ -30,7 +30,7 @@ export async function POST(request: Request) {
         const tierId = session.metadata?.tier_id
 
         if (userId && session.subscription) {
-          const sub = (await stripe.subscriptions.retrieve(session.subscription as string)) as any
+          const sub = (await stripe.subscriptions.retrieve(session.subscription as string)) as Stripe.Subscription
           const periodStart = sub.current_period_start ? new Date(sub.current_period_start * 1000).toISOString() : null
           const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null
 
@@ -64,7 +64,7 @@ export async function POST(request: Request) {
       }
 
       case "customer.subscription.created": {
-        const sub = event.data.object as any
+        const sub = event.data.object as Stripe.Subscription
         const customerId = sub.customer as string
         const periodStart = sub.current_period_start ? new Date(sub.current_period_start * 1000).toISOString() : null
         const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null
@@ -96,7 +96,7 @@ export async function POST(request: Request) {
       }
 
       case "customer.subscription.updated": {
-        const sub = event.data.object as any
+        const sub = event.data.object as Stripe.Subscription
         const customerId = sub.customer as string
         const periodStart = sub.current_period_start ? new Date(sub.current_period_start * 1000).toISOString() : null
         const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null
