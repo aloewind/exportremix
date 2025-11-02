@@ -154,9 +154,11 @@ export function BillingClient({ subscription, usage }: BillingClientProps) {
                 <p className="font-semibold text-destructive">{t.billing.subscriptionCancelled}</p>
                 <p className="text-sm text-muted-foreground mt-1">
                   {(() => {
-                    const key = "subscriptionCancelledDesc" as keyof typeof t.billing
+                    const key = "subscriptionCancelledDesc" as const
                     const desc =
-                      key in t.billing && typeof t.billing[key] === "string" ? (t.billing[key] as string) : null
+                      key in t.billing && typeof t.billing[key as keyof typeof t.billing] === "string"
+                        ? (t.billing[key as keyof typeof t.billing] as string)
+                        : null
                     return desc
                       ? desc.replace("{date}", new Date(subscription.current_period_end).toLocaleDateString())
                       : `Your subscription will remain active until ${new Date(subscription.current_period_end).toLocaleDateString()}`
@@ -173,7 +175,7 @@ export function BillingClient({ subscription, usage }: BillingClientProps) {
             <div>
               <div className="flex items-center gap-3">
                 <h2 className="text-2xl font-semibold">
-                  {t.billing[currentTier.name]} {t.billing.plan}
+                  {t.billing[currentTier.name as keyof typeof t.billing] as string} {t.billing.plan}
                 </h2>
                 <Badge
                   variant={
