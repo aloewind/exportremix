@@ -3,7 +3,7 @@ import { Loader2Icon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const Spinner = React.forwardRef<SVGSVGElement, React.ComponentProps<"svg">>(({ className, ...props }, ref) => {
+const Spinner = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>(({ className, ...props }, ref) => {
   return (
     <Loader2Icon
       ref={ref}
