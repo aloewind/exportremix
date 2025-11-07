@@ -20,11 +20,15 @@ export async function POST(request: Request) {
       .eq("user_id", user.id)
       .eq("is_enabled", true)
 
-    const { data: settings } = await supabase
+    const { data: settings, error: settingsError } = await supabase
       .from("user_settings")
       .select("vibe_preference")
       .eq("user_id", user.id)
       .single()
+
+    if (settingsError) {
+      console.error("[Remix] Error fetching user settings:", settingsError)
+    }
 
     const vibePreference = settings?.vibe_preference || "balanced"
 
@@ -42,7 +46,14 @@ export async function POST(request: Request) {
       )
     }
 
-    const body = await request.json()
+    let body
+    try {
+      body = await request.json()
+    } catch (parseError) {
+      console.error("[Remix] JSON parse error:", parseError)
+      return NextResponse.json({ success: false, error: "Invalid request body" }, { status: 400 })
+    }
+
     const { prompt, context } = body
 
     if (!prompt) {

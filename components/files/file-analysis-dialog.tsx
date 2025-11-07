@@ -96,10 +96,18 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
 
       if (response.ok) {
         setCorrectedFile(data)
-        addWorkflowStatus(`✅ Fixed ${data.issuesFixed} issues • Removed ${data.duplicatesRemoved} duplicates`)
+        const totalFixes = data.issuesFixed || 0
+        const aiFixes = data.aiFixes || 0
+        const programmaticFixes = data.programmaticFixes || 0
+        const complianceScore = data.complianceScore || "N/A"
+        
+        addWorkflowStatus(`✅ Fixed ${totalFixes} total issues (AI: ${aiFixes}, Programmatic: ${programmaticFixes})`)
+        addWorkflowStatus(`✅ Removed ${data.duplicatesRemoved} duplicates`)
+        addWorkflowStatus(`✅ Compliance Score: ${complianceScore}/10`)
+        
         toast({
           title: "✅ Corrected manifest generated",
-          description: `Fixed ${data.issuesFixed} issues and removed ${data.duplicatesRemoved} duplicates. Download or retest now.`,
+          description: `Fixed ${totalFixes} issues (${aiFixes} AI fixes, ${programmaticFixes} programmatic), removed ${data.duplicatesRemoved} duplicates. Score: ${complianceScore}/10`,
         })
       } else {
         addWorkflowStatus("❌ Correction generation failed")
@@ -175,7 +183,17 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
               return row
             })
         } else if (correctedFile.mimeType === "application/json") {
-          correctedData = JSON.parse(correctedFile.content)
+          try {
+            correctedData = JSON.parse(correctedFile.content)
+          } catch (parseError) {
+            console.error("[FileAnalysis] JSON parse error:", parseError)
+            toast({
+              title: "Error",
+              description: "Failed to parse corrected file JSON",
+              variant: "destructive",
+            })
+            return
+          }
         } else if (correctedFile.mimeType === "application/xml") {
           // For XML, we'll upload as-is and let the analyzer parse it
           correctedData = { raw_content: correctedFile.content, format: "xml" }
@@ -569,11 +587,19 @@ export function FileAnalysisDialog({ file, open, onOpenChange }: FileAnalysisDia
                 <CardContent className="space-y-4">
                   <div className="p-3 sm:p-4 rounded-lg bg-background border space-y-2">
                     <p className="text-xs sm:text-sm font-medium break-words">
-                      ✅ Fixed {correctedFile.issuesFixed} issues
+                      ✅ Fixed {correctedFile.issuesFixed} total issues
+                      {correctedFile.aiFixes !== undefined && (
+                        <span className="text-muted-foreground"> (AI: {correctedFile.aiFixes}, Programmatic: {correctedFile.programmaticFixes || 0})</span>
+                      )}
                     </p>
                     <p className="text-xs sm:text-sm font-medium break-words">
                       ✅ Removed {correctedFile.duplicatesRemoved} duplicates
                     </p>
+                    {correctedFile.complianceScore !== undefined && (
+                      <p className="text-xs sm:text-sm font-medium break-words">
+                        ✅ Compliance Score: {correctedFile.complianceScore}/10
+                      </p>
+                    )}
                     <p className="text-xs sm:text-sm text-muted-foreground break-all">File: {correctedFile.fileName}</p>
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3">

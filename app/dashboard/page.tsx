@@ -14,9 +14,25 @@ export default async function DashboardPage() {
     redirect("/login")
   }
 
-  const { data: profile } = await supabase.from("profiles").select("*").eq("id", user.id).single()
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single()
 
-  const { data: userSettings } = await supabase.from("user_settings").select("tier").eq("user_id", user.id).single()
+  if (profileError) {
+    console.error("[Dashboard] Error fetching profile:", profileError)
+  }
+
+  const { data: userSettings, error: settingsError } = await supabase
+    .from("user_settings")
+    .select("tier")
+    .eq("user_id", user.id)
+    .single()
+
+  if (settingsError) {
+    console.error("[Dashboard] Error fetching user settings:", settingsError)
+  }
 
   // Create a subscription-like object for backward compatibility
   const subscription = userSettings

@@ -15,7 +15,15 @@ export default async function BillingPage() {
     redirect("/login")
   }
 
-  const { data: subscription } = await supabase.from("subscriptions").select("*").eq("user_id", user.id).single()
+  const { data: subscription, error: subscriptionError } = await supabase
+    .from("subscriptions")
+    .select("*")
+    .eq("user_id", user.id)
+    .single()
+
+  if (subscriptionError) {
+    console.error("[Billing] Error fetching subscription:", subscriptionError)
+  }
 
   const { data: usage } = await supabase
     .from("usage_tracking")

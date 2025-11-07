@@ -42,7 +42,12 @@ export function FileUpload({ onFilesProcessed }: { onFilesProcessed?: (files: Up
           let parsedData: any // Added explicit any type annotation
 
           if (file.name.endsWith(".json")) {
-            parsedData = JSON.parse(content)
+            try {
+              parsedData = JSON.parse(content)
+            } catch (parseError) {
+              console.error("[FileUpload] JSON parse error:", parseError)
+              throw new Error("Invalid JSON file format")
+            }
           } else if (file.name.endsWith(".csv")) {
             const lines = content.split("\n")
             const headers = lines[0].split(",")

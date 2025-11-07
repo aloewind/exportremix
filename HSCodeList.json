@@ -1,0 +1,325 @@
+{
+  "01": {
+    "chapter": "Live animals",
+    "headings": {
+      "0101": "Live horses, asses, mules and hinnies",
+      "0102": "Live bovine animals",
+      "0103": "Live swine",
+      "0104": "Live sheep and goats",
+      "0105": "Live poultry",
+      "0106": "Other live animals"
+    }
+  },
+  "02": {
+    "chapter": "Meat and edible meat offal",
+    "headings": {
+      "0201": "Beef, fresh or chilled",
+      "0202": "Beef, frozen",
+      "0203": "Pork, fresh, chilled or frozen",
+      "0204": "Sheep or goat meat, fresh or frozen",
+      "0207": "Poultry meat, fresh or frozen"
+    }
+  },
+  "03": {
+    "chapter": "Fish and crustaceans, molluscs and other aquatic invertebrates",
+    "headings": {
+      "0302": "Fish, fresh or chilled",
+      "0303": "Fish, frozen",
+      "0304": "Fish fillets and other fish meat",
+      "0306": "Crustaceans (e.g., shrimp, lobster), live, fresh or frozen",
+      "0307": "Molluscs (e.g., oysters, mussels, squid)"
+    }
+  },
+  "04": {
+    "chapter": "Dairy produce; birds’ eggs; natural honey",
+    "headings": {
+      "0401": "Milk and cream, not concentrated",
+      "0402": "Milk and cream, concentrated or sweetened",
+      "0403": "Yogurt and other fermented milk",
+      "0405": "Butter and other fats from milk",
+      "0409": "Natural honey"
+    }
+  },
+  "07": {
+    "chapter": "Edible vegetables and certain roots and tubers",
+    "headings": {
+      "0701": "Potatoes, fresh or chilled",
+      "0702": "Tomatoes, fresh or chilled",
+      "0703": "Onions, shallots, garlic, leeks",
+      "0706": "Carrots, turnips and similar edible roots",
+      "0710": "Vegetables, frozen"
+    }
+  },
+  "08": {
+    "chapter": "Edible fruit and nuts; peel of citrus fruit or melons",
+    "headings": {
+      "0803": "Bananas, including plantains, fresh or dried",
+      "0804": "Dates, figs, pineapples, avocados, guavas, mangoes",
+      "0805": "Citrus fruits",
+      "0808": "Apples, pears and quinces",
+      "0810": "Other fresh fruits"
+    }
+  },
+  "09": {
+    "chapter": "Coffee, tea, mate and spices",
+    "headings": {
+      "0901": "Coffee",
+      "0902": "Tea",
+      "0904": "Pepper and capsicum",
+      "0905": "Vanilla",
+      "0907": "Cloves"
+    }
+  },
+  "10": {
+    "chapter": "Cereals",
+    "headings": {
+      "1001": "Wheat and meslin",
+      "1005": "Corn (maize)",
+      "1006": "Rice",
+      "1008": "Buckwheat, millet and other cereals"
+    }
+  },
+  "15": {
+    "chapter": "Animal or vegetable fats and oils",
+    "headings": {
+      "1507": "Soybean oil",
+      "1508": "Groundnut (peanut) oil",
+      "1511": "Palm oil",
+      "1512": "Sunflower-seed oil",
+      "1515": "Other fixed vegetable fats and oils"
+    }
+  },
+  "20": {
+    "chapter": "Preparations of vegetables, fruit, nuts",
+    "headings": {
+      "2001": "Vegetables, fruit, nuts preserved by vinegar or acetic acid",
+      "2005": "Other prepared or preserved vegetables",
+      "2008": "Fruit, nuts and other edible parts, otherwise prepared or preserved"
+    }
+  },
+  "22": {
+    "chapter": "Beverages, spirits and vinegar",
+    "headings": {
+      "2201": "Waters, including mineral and aerated",
+      "2202": "Non-alcoholic beverages",
+      "2203": "Beer made from malt",
+      "2204": "Wine of fresh grapes",
+      "2208": "Spirits, liqueurs and other alcoholic beverages"
+    }
+  },
+  "27": {
+    "chapter": "Mineral fuels, oils and products of their distillation",
+    "headings": {
+      "2709": "Crude petroleum oils",
+      "2710": "Petroleum oils (refined)",
+      "2711": "Natural gas, liquefied or gaseous",
+      "2716": "Electrical energy"
+    }
+  },
+  "30": {
+    "chapter": "Pharmaceutical products",
+    "headings": {
+      "3003": "Medicaments consisting of mixed or unmixed products",
+      "3004": "Medicaments in measured doses",
+      "3005": "Wadding, gauze, bandages and similar",
+      "3006": "Pharmaceutical goods (first-aid kits, dental cements)"
+    }
+  },
+  "32": {
+    "chapter": "Tanning or dyeing extracts; pigments; paints; inks",
+    "headings": {
+      "3204": "Synthetic organic coloring matter and preparations",
+      "3206": "Other coloring matter; inorganic pigments",
+      "3212": "Pigments dispersed in non-aqueous media",
+      "3215": "Printing ink"
+    }
+  },
+  "33": {
+    "chapter": "Essential oils and resinoids; perfumery and cosmetics",
+    "headings": {
+      "3303": "Perfumes and toilet waters",
+      "3304": "Beauty or make-up preparations",
+      "3305": "Hair preparations",
+      "3306": "Oral or dental hygiene preparations"
+    }
+  },
+  "39": {
+    "chapter": "Plastics and articles thereof",
+    "headings": {
+      "3901": "Polymers of ethylene, in primary forms",
+      "3902": "Polymers of propylene or other olefins",
+      "3923": "Articles for packing of goods (bottles, containers, caps)",
+      "3926": "Other articles of plastics"
+    }
+  },
+  "40": {
+    "chapter": "Rubber and articles thereof",
+    "headings": {
+      "4001": "Natural rubber, balata, gutta-percha",
+      "4011": "New pneumatic tires",
+      "4012": "Retreaded or used pneumatic tires",
+      "4016": "Other articles of vulcanized rubber"
+    }
+  },
+  "42": {
+    "chapter": "Articles of leather; travel goods, handbags",
+    "headings": {
+      "4202": "Trunks, suitcases, briefcases, handbags",
+      "4203": "Articles of apparel and accessories of leather"
+    }
+  },
+  "44": {
+    "chapter": "Wood and articles of wood",
+    "headings": {
+      "4407": "Wood sawn or chipped lengthwise",
+      "4410": "Particle board and similar board",
+      "4418": "Builders’ joinery and carpentry of wood"
+    }
+  },
+  "48": {
+    "chapter": "Paper and paperboard; articles thereof",
+    "headings": {
+      "4802": "Uncoated paper for writing, printing",
+      "4819": "Cartons, boxes, cases, of paper or paperboard",
+      "4820": "Registers, notebooks, diaries",
+      "4821": "Labels of paper or paperboard"
+    }
+  },
+  "49": {
+    "chapter": "Printed books, newspapers and other printed matter",
+    "headings": {
+      "4901": "Printed books, brochures, leaflets",
+      "4902": "Newspapers and periodicals",
+      "4907": "Unused postage, revenue or similar stamps"
+    }
+  },
+  "61": {
+    "chapter": "Articles of apparel, knitted or crocheted",
+    "headings": {
+      "6101": "Men’s or boys’ overcoats, raincoats",
+      "6104": "Women’s suits, dresses, skirts",
+      "6109": "T-shirts, singlets, vests",
+      "6110": "Sweaters, pullovers, cardigans"
+    }
+  },
+  "62": {
+    "chapter": "Articles of apparel, not knitted or crocheted",
+    "headings": {
+      "6201": "Men’s overcoats, capes, wind-cheaters",
+      "6203": "Men’s suits, ensembles, jackets, trousers",
+      "6204": "Women’s suits, dresses, skirts, trousers"
+    }
+  },
+  "64": {
+    "chapter": "Footwear, gaiters and the like; parts of such articles",
+    "headings": {
+      "6401": "Waterproof footwear with outer soles and uppers of rubber or plastics",
+      "6402": "Other footwear with outer soles of rubber or plastics",
+      "6403": "Footwear with outer soles of leather",
+      "6406": "Parts of footwear"
+    }
+  },
+  "68": {
+    "chapter": "Articles of stone, plaster, cement, asbestos, mica",
+    "headings": {
+      "6802": "Worked monumental or building stone",
+      "6810": "Articles of cement, concrete or artificial stone",
+      "6811": "Articles of asbestos-cement, cellulose fiber-cement"
+    }
+  },
+  "69": {
+    "chapter": "Ceramic products",
+    "headings": {
+      "6904": "Ceramic building bricks, flooring blocks",
+      "6910": "Ceramic sinks, washbasins, sanitary fixtures"
+    }
+  },
+  "70": {
+    "chapter": "Glass and glassware",
+    "headings": {
+      "7003": "Cast and rolled glass, in sheets",
+      "7009": "Glass mirrors",
+      "7013": "Glassware for table, kitchen, toilet, office"
+    }
+  },
+  "72": {
+    "chapter": "Iron and steel",
+    "headings": {
+      "7208": "Flat-rolled products of iron or non-alloy steel",
+      "7214": "Bars and rods, of iron or non-alloy steel",
+      "7228": "Other bars and rods of alloy steel"
+    }
+  },
+  "73": {
+    "chapter": "Articles of iron or steel",
+    "headings": {
+      "7304": "Tubes, pipes and hollow profiles, seamless",
+      "7308": "Structures and parts of structures of iron or steel",
+      "7318": "Screws, bolts, nuts, washers"
+    }
+  },
+  "84": {
+    "chapter": "Machinery, mechanical appliances, boilers; parts thereof",
+    "headings": {
+      "8407": "Spark-ignition reciprocating internal combustion engines",
+      "8414": "Air or vacuum pumps, compressors, fans",
+      "8421": "Centrifuges, filtering or purifying machinery",
+      "8471": "Automatic data processing machines (computers)",
+      "8481": "Taps, cocks, valves for pipes, tanks, etc."
+    }
+  },
+  "85": {
+    "chapter": "Electrical machinery and equipment; sound recorders and reproducers",
+    "headings": {
+      "8501": "Electric motors and generators",
+      "8504": "Transformers, static converters, inductors",
+      "8517": "Telephone sets, smartphones, routers",
+      "8525": "Transmission apparatus for radio, TV, cameras",
+      "8536": "Electrical switches, relays, fuses",
+      "8544": "Insulated wire, cable and other electric conductors"
+    }
+  },
+  "87": {
+    "chapter": "Vehicles other than railway or tramway rolling stock",
+    "headings": {
+      "8703": "Passenger motor cars",
+      "8704": "Motor vehicles for goods transport",
+      "8708": "Parts and accessories of motor vehicles",
+      "8711": "Motorcycles (including mopeds)"
+    }
+  },
+  "90": {
+    "chapter": "Optical, photographic, measuring, medical or surgical instruments",
+    "headings": {
+      "9001": "Optical fibers and lenses",
+      "9018": "Medical instruments and appliances",
+      "9022": "X-ray apparatus",
+      "9031": "Measuring or checking instruments"
+    }
+  },
+  "94": {
+    "chapter": "Furniture; bedding, lamps and lighting fittings",
+    "headings": {
+      "9401": "Seats (other than those of heading 9402)",
+      "9403": "Other furniture and parts thereof",
+      "9405": "Lamps and lighting fittings",
+      "9406": "Prefabricated buildings"
+    }
+  },
+  "95": {
+    "chapter": "Toys, games and sports requisites",
+    "headings": {
+      "9503": "Tricycles, scooters, pedal cars, dolls, puzzles",
+      "9506": "Articles and equipment for general physical exercise",
+      "9508": "Traveling circuses, amusement rides, fairground equipment"
+    }
+  },
+  "97": {
+    "chapter": "Works of art, collectors’ pieces and antiques",
+    "headings": {
+      "9701": "Paintings, drawings and pastels",
+      "9703": "Original sculptures and statuary",
+      "9706": "Antiques of an age exceeding 100 years"
+    }
+  }
+}

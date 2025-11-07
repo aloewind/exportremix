@@ -43,7 +43,15 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         data: { user },
       } = await supabase.auth.getUser()
       if (user) {
-        const { data: profile } = await supabase.from("profiles").select("is_admin").eq("id", user.id).single()
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("is_admin")
+          .eq("id", user.id)
+          .single()
+
+        if (profileError) {
+          console.error("[DashboardLayout] Error fetching profile:", profileError)
+        }
 
         setIsAdmin(profile?.is_admin || false)
       }
@@ -76,6 +84,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     { name: t.nav.dashboard, href: "/dashboard", icon: LayoutDashboard },
     { name: t.nav.upload, href: "/dashboard/upload", icon: Upload },
     { name: t.nav.files, href: "/dashboard/files", icon: FolderOpen },
+    { name: "Back Office", href: "/dashboard/back-office", icon: Database },
     { name: "API Connect", href: "/dashboard/integrations", icon: Database },
     { name: "API Data", href: "/dashboard/api-data", icon: Database },
     { name: t.nav.remix, href: "/dashboard/remix", icon: Sparkles },

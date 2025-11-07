@@ -1,0 +1,148 @@
+{
+  "title": "Export Remix Compliance Blueprint",
+  "version": "1.0.0",
+  "description": "International and U.S. national export compliance codes and standards",
+  "governing_frameworks": {
+    "international": {
+      "wco_harmonized_system": {
+        "name": "WCO Harmonized System (HS)",
+        "purpose": "Commodity classification (chapters/headers; 6-digit foundation)",
+        "reference": "WCO HS Nomenclature"
+      },
+      "un_cefact_edifact": {
+        "name": "UN/CEFACT / UN/EDIFACT",
+        "purpose": "Message semantics (CUSCAR manifest, CUSDEC customs declaration)",
+        "reference": "WCO Data Model data elements alignment"
+      },
+      "incoterms": {
+        "name": "Incoterms® (ICC 2020)",
+        "purpose": "Trade terms semantics (EXW, FOB, CIF, DDP)",
+        "reference": "ICC Incoterms 2020"
+      },
+      "iso_standards": {
+        "iso_3166_1_2": "Country/region codes",
+        "un_locode": "Locations/ports codes",
+        "iso_4217": "Currency codes",
+        "iso_8601": "Date/time format",
+        "iso_6346": "Container codes"
+      },
+      "dangerous_goods": {
+        "iata_dgr": "Air transport dangerous goods",
+        "icao_ti": "ICAO Technical Instructions",
+        "imdg_code": "Ocean transport dangerous goods",
+        "un_numbers": "UN numbers & packing groups"
+      },
+      "ispm_15": "Wood packaging material standards",
+      "cites": "Protected species when commodities are listed"
+    },
+    "united_states": {
+      "census_ftr": {
+        "name": "Census Bureau FTR (15 CFR Part 30)",
+        "purpose": "AES/EEI filing requirements, data elements, USPPI, Routed Export Transactions, ITN handling",
+        "reference": "15 CFR Part 30"
+      },
+      "cbp_ace": {
+        "name": "CBP ACE / Electronic Export Manifest (EEM)",
+        "purpose": "Data elements by mode (Air, Ocean, Rail)",
+        "reference": "CBP EEM specifications"
+      },
+      "bis_ear": {
+        "name": "BIS EAR (15 CFR 730–774)",
+        "purpose": "ECCN, license/exception checks (GBS, LVS, TSR), De Minimis/content rules",
+        "reference": "15 CFR 730–774"
+      },
+      "ofac": {
+        "name": "OFAC (31 CFR)",
+        "purpose": "Sanctions programs; SDN, SSI, regional embargoes",
+        "reference": "31 CFR"
+      },
+      "phmsa_49_cfr": {
+        "name": "PHMSA / 49 CFR",
+        "purpose": "U.S. hazardous materials rules",
+        "reference": "49 CFR"
+      },
+      "19_cfr": {
+        "name": "19 CFR",
+        "purpose": "Origin marking; valuation basics",
+        "reference": "19 CFR"
+      }
+    }
+  },
+  "compliance_rules": {
+    "identity_roles": {
+      "rule_ref": "FTR:15CFR30.6",
+      "requirements": [
+        "USPPI (name + U.S. address + EIN) required unless Routed Export Transaction",
+        "ITN must be present when AES filing is required",
+        "If routed, store AES filer role"
+      ]
+    },
+    "classification_values": {
+      "rule_ref": "WCO:HS",
+      "requirements": [
+        "HS (6-digit) / Schedule B (10-digit) required for each line",
+        "Quantity/UOM/value arithmetic checks",
+        "Origin ISO 3166 required",
+        "Currency ISO 4217 required"
+      ]
+    },
+    "eccn_ear": {
+      "rule_ref": "EAR:Part740",
+      "requirements": [
+        "If commodity likely dual-use → require ECCN or document reason NLR",
+        "If ECCN present, evaluate license exception fields (LVS/GBS/TSR)"
+      ]
+    },
+    "ofac_screening": {
+      "rule_ref": "OFAC:31CFR",
+      "requirements": [
+        "Consignee/End-user country vs. sanctioned regions",
+        "Party names vs. DPL/SDN/Entity lists",
+        "If hit → severity block"
+      ]
+    },
+    "dangerous_goods": {
+      "rule_ref": "IATA:DGR, IMDG:Part2, 49CFR",
+      "requirements": [
+        "If dangerous_goods present, require UN number, class, packing group",
+        "Mode compatibility check",
+        "Proper shipping name in description for air/ocean"
+      ]
+    },
+    "mode_specific_eem": {
+      "air": {
+        "rule_ref": "CBP:EEM-AIR",
+        "requirements": ["AWB number", "Airport codes (UN/LOCODE/IATA)", "Pieces", "Chargeable weight", "Flight"]
+      },
+      "ocean": {
+        "rule_ref": "CBP:EEM-OCEAN",
+        "requirements": ["B/L", "SCAC", "Container ISO 6346", "Seal", "Vessel IMO", "VGM if required"]
+      },
+      "rail": {
+        "rule_ref": "CBP:EEM-RAIL",
+        "requirements": ["Rail carrier ID", "Wagon/container mapping"]
+      }
+    },
+    "dates_places": {
+      "rule_ref": "ISO:8601, UN:LOCODE",
+      "requirements": ["ETD/ETA required", "Origin/destination must be valid LOCODE", "Dates in future logic check"]
+    },
+    "packaging_ispm15": {
+      "rule_ref": "ISPM:15",
+      "requirements": ["If wood packaging → require ISPM-15 declaration or flag warn"]
+    },
+    "incoterms_impacts": {
+      "rule_ref": "ICC:Incoterms2020",
+      "requirements": [
+        "If Incoterm shifts cost/risk (e.g., DDP), require additional fields",
+        "Possible license/tax responsibilities flag"
+      ]
+    }
+  },
+  "severity_levels": {
+    "block": "Prevents export - must fix",
+    "warn": "Warning - should fix",
+    "info": "Informational - recommended fix"
+  }
+}
+

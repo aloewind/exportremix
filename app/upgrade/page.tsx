@@ -13,7 +13,16 @@ export default async function UpgradePage() {
 
   let currentTier = "free"
   if (user) {
-    const { data: subscription } = await supabase.from("subscriptions").select("tier").eq("user_id", user.id).single()
+    const { data: subscription, error: subscriptionError } = await supabase
+      .from("subscriptions")
+      .select("tier")
+      .eq("user_id", user.id)
+      .single()
+
+    if (subscriptionError) {
+      console.error("[Upgrade] Error fetching subscription:", subscriptionError)
+    }
+
     currentTier = subscription?.tier || "free"
   }
 

@@ -20,7 +20,15 @@ export default async function VibesPage() {
     redirect("/login")
   }
 
-  const { data: profile } = await supabase.from("profiles").select("*").eq("id", user.id).single()
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single()
+
+  if (profileError) {
+    console.error("[Vibes] Error fetching profile:", profileError)
+  }
 
   return (
     <DashboardLayout>

@@ -6,7 +6,10 @@
     "build": "tsc --noEmit && next lint && next build",
     "cypress": "cypress open",
     "cypress:headless": "cypress run",
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
+    "dev:ensure": "node scripts/ensure-server.js",
+    "dev:open": "node scripts/ensure-server-and-open.js",
+    "dev:keep-alive": "node scripts/keep-server-alive.js",
     "lint": "next lint",
     "start": "next start",
     "test:e2e": "start-server-and-test dev http://localhost:3000 cypress:headless"

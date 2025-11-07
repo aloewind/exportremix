@@ -16,7 +16,15 @@ export default async function SettingsPage() {
     redirect("/login")
   }
 
-  const { data: subscription } = await supabase.from("subscriptions").select("*").eq("user_id", user.id).single()
+  const { data: subscription, error: subscriptionError } = await supabase
+    .from("subscriptions")
+    .select("*")
+    .eq("user_id", user.id)
+    .single()
+
+  if (subscriptionError) {
+    console.error("[Settings] Error fetching subscription:", subscriptionError)
+  }
 
   const currentMonth = new Date().toISOString().slice(0, 7)
   const { data: usage } = await supabase

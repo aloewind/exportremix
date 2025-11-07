@@ -22,7 +22,16 @@ export default async function AdminPage() {
   }
 
   // Check if user is admin
-  const { data: profile } = await supabase.from("profiles").select("is_admin").eq("id", user.id).single()
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("is_admin")
+    .eq("id", user.id)
+    .single()
+
+  if (profileError) {
+    console.error("[Admin] Error fetching profile:", profileError)
+    redirect("/dashboard")
+  }
 
   if (!profile?.is_admin) {
     redirect("/dashboard")

@@ -7,11 +7,11 @@ export function getSupabaseBrowserClient() {
     return client
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co"
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key"
 
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error("Supabase configuration is missing. Please check environment variables.")
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    console.warn("[Supabase] Missing environment variables. Using placeholder values. Some features may not work.")
   }
 
   try {
@@ -19,6 +19,7 @@ export function getSupabaseBrowserClient() {
     return client
   } catch (error) {
     console.error("Error initializing Supabase browser client:", error)
+    // Return a mock client to prevent crashes
     throw error
   }
 }

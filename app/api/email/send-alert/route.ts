@@ -13,26 +13,42 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const body = await request.json()
+    let body
+    try {
+      body = await request.json()
+    } catch (parseError) {
+      console.error("[Email Alert] JSON parse error:", parseError)
+      return NextResponse.json({ error: "Invalid request body" }, { status: 400 })
+    }
+
     const { alertId, alertData } = body
 
+    if (!alertData || !alertId) {
+      return NextResponse.json({ error: "Missing alertId or alertData" }, { status: 400 })
+    }
+
     // Get user profile
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("full_name, email, email_alerts_enabled")
       .eq("id", user.id)
       .single()
 
+    if (profileError) {
+      console.error("[Email Alert] Error fetching profile:", profileError)
+      return NextResponse.json({ error: "Failed to fetch user profile" }, { status: 500 })
+    }
+
     console.log("[v0] Alert notification - using in-app display only", {
       userId: user.id,
-      alertTitle: alertData.title,
+      alertTitle: alertData?.title || "Unknown",
     })
 
     await supabase.from("email_logs").insert({
       user_id: user.id,
       email_type: "surge_alert",
       recipient_email: profile?.email || "unknown",
-      subject: `${alertData.severity.toUpperCase()} Alert: ${alertData.title}`,
+      subject: `${alertData?.severity?.toUpperCase() || "INFO"} Alert: ${alertData?.title || "Unknown"}`,
       status: "in-app-notification",
       error_message: null,
       metadata: { alert_id: alertId, mode: "in-app-only" },
